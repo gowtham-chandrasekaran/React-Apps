@@ -13,6 +13,9 @@ function App() {
     window.navigator.clipboard.writeText(password);
     passwordRef.current?.select();
   };
+  useEffect(() => {
+    generatePassword();
+  }, [length, charAllowed, numberAllowed]);
 
   const generatePassword = useCallback(() => {
     let pass = "";
@@ -24,15 +27,11 @@ function App() {
       str += "!@#$%^&*()_+";
     }
     for (let i = 0; i < length; i++) {
-      const char = Math.floor(Math.random() * str.length + 1);
+      const char = Math.floor(Math.random() * str.length);
       pass += str.charAt(char);
     }
     setPassword(pass);
   }, [numberAllowed, charAllowed, length]);
-
-  useEffect(() => {
-    generatePassword();
-  }, [length, charAllowed, numberAllowed]);
 
   return (
     <div className="flex justify-center items-center h-screen">
